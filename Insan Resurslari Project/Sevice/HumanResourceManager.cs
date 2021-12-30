@@ -37,29 +37,27 @@ namespace Insan_Resurslari_Project.Sevice
 
         public void EditDepartment(string name, string newName)
         {
-            Department department = null;
-            foreach (Department item in _departments)
+            
+            foreach (Department dep in _departments)
             {
-                if (item.Name.ToUpper() == name.ToUpper())
+                if (dep.Name.ToUpper() == name.ToUpper())
                 {
-                    department = item;
+                    //dep.Name = newName;
+
+                    foreach (Employee emp in dep.Employees)
+                    {
+                        if (dep.Name.ToUpper() == emp.DepartmentName.ToUpper())
+                        {
+                            dep.Name = newName;
+                            string removed = emp.DepartmentName.Remove(0, 2);
+                            string newWorkerNo = newName.Substring(0, 2) + removed;
+                            emp.No = newWorkerNo;
+                            //emp.DepartmentName = newName;
+                        }
+                    }
                     break;
                 }
             }
-                department.Name = newName;
-
-            //foreach (Department item in _departments)
-            //{
-            //    foreach (Employee item2 in item.Employees)
-            //    {
-            //        if (item.Name.ToUpper() == item2.DepartmentName.ToUpper())
-            //        {
-            //            item2.DepartmentName = newName;
-            //        }
-            //    }
-            //}
-
-            
         }
 
         public void EditEmployee(string no, string fullname,double salary, string position)
