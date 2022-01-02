@@ -114,6 +114,14 @@ namespace Insan_Resurslari_Project
             Console.WriteLine("Departamentin adini daxil edin: ");
             reEnterDepartmentName:
             string departmentName = Console.ReadLine();
+            foreach (Department dep in humanResourceManager.Departments)
+            {
+                if (dep.Name==departmentName)
+                {
+                    Console.WriteLine("Bu adda departament movcuddur.Yeni ad teyin edin:");
+                    goto reEnterDepartmentName;
+                }
+            }
             if (String.IsNullOrWhiteSpace(departmentName))
             {
                 Console.WriteLine("Departamentin adini duzgun daxil edin");
@@ -519,7 +527,7 @@ namespace Insan_Resurslari_Project
             string departmentname = Console.ReadLine();
             foreach (Department dep in humanResourceManager.Departments)
             {
-                if (dep.Name.ToLower() != departmentname)
+                if (dep.Name.ToLower() != departmentname.ToLower())
                 {
                     Console.WriteLine("Daxil etdiyiniz adda departament movcud deyil.");
                     Console.WriteLine("Yeniden daxil edin:");
