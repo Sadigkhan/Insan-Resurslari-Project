@@ -42,17 +42,13 @@ namespace Insan_Resurslari_Project.Sevice
             {
                 if (dep.Name.ToUpper() == name.ToUpper())
                 {
-                    //dep.Name = newName;
-
+                    dep.Name = newName;
                     foreach (Employee emp in dep.Employees)
                     {
-                        if (dep.Name.ToUpper() == emp.DepartmentName.ToUpper())
+                        if (emp != null)
                         {
-                            dep.Name = newName;
-                            string removed = emp.DepartmentName.Remove(0, 2);
-                            string newWorkerNo = newName.Substring(0, 2) + removed;
-                            emp.No = newWorkerNo;
-                            //emp.DepartmentName = newName;
+                            emp.DepartmentName = newName;
+                            emp.No = emp.DepartmentName.ToUpper().Substring(0, 2) + emp.No.Remove(0, 2);
                         }
                     }
                     break;
@@ -60,7 +56,7 @@ namespace Insan_Resurslari_Project.Sevice
             }
         }
 
-        public void EditEmployee(string no, string fullname,double salary, string position)
+        public void EditEmployee(string no,double salary, string position)
         {
             Employee employee = null;
             foreach (Department item in _departments)
@@ -69,7 +65,7 @@ namespace Insan_Resurslari_Project.Sevice
                 {
                     foreach (Employee item2 in item.Employees)
                     {
-                        if (item2 != null && item2.No == no && item2.Fullname == fullname)
+                        if (item2 != null && item2.No == no)
                         {
                             employee = item2;
                         }
@@ -78,6 +74,7 @@ namespace Insan_Resurslari_Project.Sevice
             }
             employee.Position = position;
             employee.Salary = salary;
+            
         }
 
         public void RemoveEmployee(string no, string departmentName)

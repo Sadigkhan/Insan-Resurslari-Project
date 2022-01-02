@@ -13,7 +13,7 @@ namespace Insan_Resurslari_Project.Interface
         void EditDepartment(string name,string newName);
         void AddEmployee(string fullname, string position, double salary, string departmentName);
         void RemoveEmployee(string no, string departmentName);
-        void EditEmployee(string no,string fullname,double salary,string position);
+        void EditEmployee(string no,double salary,string position);
 
     }
 }
