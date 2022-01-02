@@ -441,8 +441,18 @@ namespace Insan_Resurslari_Project
                                             Console.WriteLine("Duzgun daxil edin...");
                                             goto reEnternewSalary;
                                         }
+                                       
+                                        
 
                                         item2.Salary = newSalaryNum;
+                                        foreach (Department dep in humanResourceManager.Departments)
+                                        {
+                                            if (dep.SalaryCounter() > dep.SalaryLimit)
+                                            {
+                                                Console.WriteLine("Departamente teyin olunmus maas limitini kecmemelisiniz");
+                                                goto reEnternewSalary;
+                                            }
+                                        }
                                         Console.WriteLine("Maasda duzelis olundu...");
                                         break;
                                     case 2:

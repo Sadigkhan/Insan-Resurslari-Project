@@ -82,7 +82,21 @@ namespace Insan_Resurslari_Project.Models
                 return totalSalary / count;
             }
         }
-       
+        public double SalaryCounter()
+        {
+            double salaryNow = 0;
+
+            foreach (Employee item in Employees)
+            {
+                if (item != null)
+                {
+                    salaryNow += item.Salary;
+                }
+            }
+
+            return salaryNow;
+        }
+
         public Department(string name,int workerlimit,double salarylimit)
         {
             Employees = new Employee[0];
