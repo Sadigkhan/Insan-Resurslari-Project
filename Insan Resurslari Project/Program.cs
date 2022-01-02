@@ -78,22 +78,24 @@ namespace Insan_Resurslari_Project
                 foreach (Department item in humanResourceManager.Departments)
                 {
                     int counter = 0;
+
                     for (int i = 0; i < item.Employees.Length; i++)
                     {
                         if (item.Employees[i] != null)
                         {
                             counter++;
                         }
+
                     }
                     if (item.Employees.Length == 0)
                     {
-                         Console.WriteLine($"\n{item}\nMaas ortalamasi: {0}\nHazirki isci sayi: {counter}");
-                        Console.WriteLine( "_____________________________________________________________________________");
+                        Console.WriteLine($"\n{item}\nMaas ortalamasi: {0}\nHazirki isci sayi: {counter}");
+                        Console.WriteLine("_____________________________________________________________________________");
 
                     }
-                    else 
-                    { 
-                    Console.WriteLine($"\n{item}\nMaas ortalamasi: {item.CalcSalaryAverage()}\nHazirki isci sayi: {counter}");
+                    else
+                    {
+                        Console.WriteLine($"\n{item}\nMaas ortalamasi: {item.CalcSalaryAverage()}\nHazirki isci sayi: {counter}");
                         //Console.Write($"Maas ortalamasi: {item.CalcSalaryAverage(item)}");
                     }
 
@@ -120,7 +122,7 @@ namespace Insan_Resurslari_Project
             checkWorkerlimit:
             string workersNum = Console.ReadLine();
             int workersNum1 = 0;
-            while (!int.TryParse(workersNum,out workersNum1)||workersNum1<1)
+            while (!int.TryParse(workersNum, out workersNum1) || workersNum1 < 1)
             {
                 Console.WriteLine("Isci sayini duzgun daxil edin...");
                 goto checkWorkerlimit;
@@ -219,10 +221,10 @@ namespace Insan_Resurslari_Project
             {
                 foreach (Department item in humanResourceManager.Departments)
                 {
-                    
+
                     Console.WriteLine($"{item}\n");
-                    
-                   
+
+
 
                 }
             }
@@ -273,12 +275,12 @@ namespace Insan_Resurslari_Project
                     Console.WriteLine("------------------------------------");
                 }
             }
-           
+
 
         }
 
         private static void AddEmployee(ref HumanResourceManager humanResourceManager)
-        {          
+        {
 
             Console.WriteLine("Elave etmek istediyiniz iscinin ad ve soyadini daxil edin: ");
             reEnterFullname:
@@ -293,7 +295,7 @@ namespace Insan_Resurslari_Project
             Console.WriteLine("\nIscinin vezifesini daxil edin: ");
             reEnterPositionName:
             string vezifeAdi = Console.ReadLine();
-            if (String.IsNullOrWhiteSpace(vezifeAdi)||vezifeAdi.Length<2)
+            if (String.IsNullOrWhiteSpace(vezifeAdi) || vezifeAdi.Length < 2)
             {
                 Console.WriteLine("Vezife adini duzgun qeyd edin...");
                 goto reEnterPositionName;
@@ -311,14 +313,14 @@ namespace Insan_Resurslari_Project
 
             Console.WriteLine("\nIscini elave etmek istediyiniz departament adini daxil edin: ");
             reEnterDepartmentName:
-            
+
             string departmentName = Console.ReadLine();
-            
+
             if (String.IsNullOrWhiteSpace(departmentName))
             {
                 Console.WriteLine("Departament adini duzgun daxil edin...");
                 goto reEnterDepartmentName;
-            }      
+            }
             if (humanResourceManager.Departments.Length <= 0)
             {
                 Console.WriteLine("Hazirda departament movcud deyil. Ilk once departament yaradin.");
@@ -330,7 +332,7 @@ namespace Insan_Resurslari_Project
             {
                 if (item.Name.ToUpper() == departmentName.ToUpper())
                 {
-                    
+
                     department = item;
                     break;
                 }
@@ -347,13 +349,32 @@ namespace Insan_Resurslari_Project
                     Console.WriteLine($"Departamente teyin edilmis maas limitini {department.SalaryLimit - (department.CalcSalaryAverage() * department.Employees.Length)} AZN kecdiniz");
                     return;
                 }
-                
-                    if ((department.Employees.Length + 1) > department.WorkerLimit)
+                foreach (Department item in humanResourceManager.Departments)
                 {
-                    Console.Clear();
-                    Console.WriteLine("Departamente teyin edilmis isci limitini kecdiniz...");
-                    return;
+                    int nullcounter = 0;
+                    int counter = 0;
+
+                    for (int i = 0; i < item.Employees.Length; i++)
+                    {
+                        if (item.Employees[i] != null)
+                        {
+                            counter++;
+                        }
+                        else
+                        {                                                                 //Departamentden isci silinerse yerine isci elave etmek mumkundur
+                            nullcounter++;
+                        }
+                        if (counter - nullcounter >= department.WorkerLimit-1)
+                        {
+                            Console.WriteLine("Teyin edilmis isci limitini kecdiniz...");
+                            return;
+                        }
+                    }
                 }
+                {
+
+                }
+            
             }
             else
             {
@@ -361,7 +382,7 @@ namespace Insan_Resurslari_Project
                 return;
             }
 
-           
+
 
 
             humanResourceManager.AddEmployee(tamAd, vezifeAdi, checkmaas, departmentName);
@@ -371,7 +392,7 @@ namespace Insan_Resurslari_Project
         {
             if (humanResourceManager.Departments.Length > 0)
             {
-                
+
 
                 foreach (Department item in humanResourceManager.Departments)
                 {
@@ -440,7 +461,7 @@ namespace Insan_Resurslari_Project
                                         break;
                                 }
                                 break;
-                            } 
+                            }
                         }
                     }
                     else
@@ -522,19 +543,18 @@ namespace Insan_Resurslari_Project
                     Console.WriteLine("Duzgun daxil edin:");
                     goto reEnterWorkerNo;
                 }
-                
-                //foreach (Employee item2 in item.Employees)
-               // {
-                    for (int i = 0; i < item.Employees.Length; i++)
+
+
+                for (int i = 0; i < item.Employees.Length; i++)
+                {
+                    if (item.Employees[i].No.ToUpper() == workerNo.ToUpper())
                     {
-                        if (item.Employees[i].No.ToUpper() == workerNo.ToUpper())
-                        {
-                            item.Employees[i] = null;
-                            Console.WriteLine("Silmek istediyiniz isci ugurla silindi");
-                        }
+                        item.Employees[i] = null;
+                        Console.WriteLine("Silmek istediyiniz isci ugurla silindi");
                     }
-                   
-               // }
+                }
+
+
             }
         }
     }
