@@ -540,122 +540,162 @@ namespace Insan_Resurslari_Project
 
         private static void RemoveEmployee(ref HumanResourceManager humanResourceManager)
         {
-            int counter = 0;
-            foreach (Department department in humanResourceManager.Departments)
+            foreach (Department dep in humanResourceManager.Departments)
             {
-                if (department.Employees.Length > 0)
+                Console.WriteLine("Iscisini silmek istediyiniz departament adini daxil edin");
+                Console.WriteLine($"{dep}\n");
+                
+                reEnterDepName:
+                string depName = Console.ReadLine();
+                if (string.IsNullOrWhiteSpace(depName) || dep.Name != depName)
                 {
-                    counter++;
+                    Console.WriteLine("Departamentin adini duzgun daxil edin");
+                    goto reEnterDepName;
+                }
+                else
+                {
+                    foreach (Employee emp in dep.Employees)
+                    {
+                        Console.WriteLine(emp);
+                    }
+                    Console.WriteLine("Silmek istediyiniz iscinin ID nomresini daxil edin:");
+                    string empNo = Console.ReadLine();
+                    for (int i = 0; i < dep.Employees.Length; i++)
+                    {
+                        if (dep.Employees[i].No.ToLower()==empNo.ToLower())
+                        {
+                            dep.Employees[i] = null;
+                            Console.WriteLine("Silmek istediyiniz isci ugurla silindi");                          
+                        }
+
+                       
+
+                    }
+                    {
+                        Console.WriteLine("Daxil etdiyiniz ID nomresine uygun isci tapilmadi...");
+
+                    }
                 }
             }
-
-            if (counter == 0)
-            {
-                Console.WriteLine("Hec bir isci movcud deyil. Emeliyyati icra etmek ucun hec olmasa 1 departament ve 1 nefer isci olmalidir.\n");
-                return;
-            }
-
-            Console.WriteLine("Departamentlerin siyahisi:\n");
-            Console.WriteLine("------------------------------------------");
-            foreach (Department item in humanResourceManager.Departments)
-            {
-                Console.WriteLine(item);
-                Console.WriteLine("------------------------------------------");
-            }
-
-            Console.WriteLine("\nHansi departamenten isci silmek isteyirsiniz?");
-            Console.Write("Departament adini daxil edin: ");
-            reEnterSelectDepartment:
-            string selectDepartment = Console.ReadLine();
-            if (String.IsNullOrWhiteSpace(selectDepartment) || selectDepartment.Length < 2)
-            {
-                Console.WriteLine("Duzgun daxil edin:");
-                goto reEnterSelectDepartment;
-            }
-
-            string DelWorker = string.Empty;
-            bool find = true;
-            foreach (Department department in humanResourceManager.Departments)
-            {
-                if (department.Name.ToLower() == selectDepartment.ToLower())
-                {
-                    find = false;
-                    int cntworker = 0;
-                    foreach (Employee employee in department.Employees)
-                    {
-                        if (employee != null)
-                        {
-                            cntworker++;
-                        }
-                    }
-                    if (cntworker == 0)
-                    {
-                        Console.Clear();
-                        Console.WriteLine($"\"{department.Name}\" departamentinde isci yoxdur...\n");
-                        return;
-                    }
-
-                    Console.Clear();
-                    Console.WriteLine($"\"{department.Name}\" departamentindeki iscilerin siyahisi:\n");
-                    Console.WriteLine("------------------------------------------");
-                    foreach (Employee employee in department.Employees)
-                    {
-                        if (employee != null)
-                        {
-                            Console.WriteLine(employee);
-                            Console.WriteLine("------------------------------------------");
-                        }
-                    }
-
-                    Console.WriteLine("\nSilmek istediyiniz iscinin nomresini daxil edin:");
-                    reEnterDelWorker:
-                    DelWorker = Console.ReadLine();
-                    if (String.IsNullOrWhiteSpace(DelWorker) || DelWorker.Length < 6)
-                    {
-                        Console.WriteLine("Duzgun daxil edin:");
-                        goto reEnterDelWorker;
-                    }
-
-                    bool deleted = false;
-                    for (int i = 0; i < department.Employees.Length; i++)
-                    {
-                        if (department.Employees[i] != null)
-                        {
-                            if (department.Employees[i].No.ToLower() == DelWorker.ToLower())
-                            {
-                                deleted = true;
-                                break;
-                            }
-                        }
-                    }
-
-                    if (deleted)
-                    {
-                        Console.Clear();
-                        Console.WriteLine("Isci silindi...\n");
-                    }
-
-                    if (deleted == false)
-                    {
-                        Console.Clear();
-                        Console.WriteLine("Daxil etdiyiniz nomrede isci movcud deyil...\n");
-                        return;
-                    }
-
-                    break;
-                }
-            }
-
-            if (find)
-            {
-                Console.Clear();
-                Console.WriteLine("Daxil etdiyiniz adda departament yoxdur...\n");
-                return;
-            }
-
-            humanResourceManager.RemoveEmployee(DelWorker, selectDepartment);
-
+           
         }
+        //{
+        //    int counter = 0;
+        //    foreach (Department department in humanResourceManager.Departments)
+        //    {
+        //        if (department.Employees.Length > 0)
+        //        {
+        //            counter++;
+        //        }
+        //    }
+
+        //    if (counter == 0)
+        //    {
+        //        Console.WriteLine("Hec bir isci movcud deyil. Emeliyyati icra etmek ucun hec olmasa 1 departament ve 1 nefer isci olmalidir.\n");
+        //        return;
+        //    }
+
+        //    Console.WriteLine("Departamentlerin siyahisi:\n");
+        //    Console.WriteLine("------------------------------------------");
+        //    foreach (Department item in humanResourceManager.Departments)
+        //    {
+        //        Console.WriteLine(item);
+        //        Console.WriteLine("------------------------------------------");
+        //    }
+
+        //    Console.WriteLine("\nHansi departamenten isci silmek isteyirsiniz?");
+        //    Console.Write("Departament adini daxil edin: ");
+        //    reEnterSelectDepartment:
+        //    string selectDepartment = Console.ReadLine();
+        //    if (String.IsNullOrWhiteSpace(selectDepartment) || selectDepartment.Length < 2)
+        //    {
+        //        Console.WriteLine("Duzgun daxil edin:");
+        //        goto reEnterSelectDepartment;
+        //    }
+
+        //    string DelWorker = string.Empty;
+        //    bool find = true;
+        //    foreach (Department department in humanResourceManager.Departments)
+        //    {
+        //        if (department.Name.ToLower() == selectDepartment.ToLower())
+        //        {
+        //            find = false;
+        //            int cntworker = 0;
+        //            foreach (Employee employee in department.Employees)
+        //            {
+        //                if (employee != null)
+        //                {
+        //                    cntworker++;
+        //                }
+        //            }
+        //            if (cntworker == 0)
+        //            {
+        //                Console.Clear();
+        //                Console.WriteLine($"\"{department.Name}\" departamentinde isci yoxdur...\n");
+        //                return;
+        //            }
+
+        //            Console.Clear();
+        //            Console.WriteLine($"\"{department.Name}\" departamentindeki iscilerin siyahisi:\n");
+        //            Console.WriteLine("------------------------------------------");
+        //            foreach (Employee employee in department.Employees)
+        //            {
+        //                if (employee != null)
+        //                {
+        //                    Console.WriteLine(employee);
+        //                    Console.WriteLine("------------------------------------------");
+        //                }
+        //            }
+
+        //            Console.WriteLine("\nSilmek istediyiniz iscinin nomresini daxil edin:");
+        //            reEnterDelWorker:
+        //            DelWorker = Console.ReadLine();
+        //            if (String.IsNullOrWhiteSpace(DelWorker) || DelWorker.Length < 6)
+        //            {
+        //                Console.WriteLine("Duzgun daxil edin:");
+        //                goto reEnterDelWorker;
+        //            }
+
+        //            bool deleted = false;
+        //            for (int i = 0; i < department.Employees.Length; i++)
+        //            {
+        //                if (department.Employees[i] != null)
+        //                {
+        //                    if (department.Employees[i].No.ToLower() == DelWorker.ToLower())
+        //                    {
+        //                        deleted = true;
+        //                        break;
+        //                    }
+        //                }
+        //            }
+
+        //            if (deleted)
+        //            {
+        //                Console.Clear();
+        //                Console.WriteLine("Isci silindi...\n");
+        //            }
+
+        //            if (deleted == false)
+        //            {
+        //                Console.Clear();
+        //                Console.WriteLine("Daxil etdiyiniz nomrede isci movcud deyil...\n");
+        //                return;
+        //            }
+
+        //            break;
+        //        }
+        //    }
+
+        //    if (find)
+        //    {
+        //        Console.Clear();
+        //        Console.WriteLine("Daxil etdiyiniz adda departament yoxdur...\n");
+        //        return;
+        //    }
+
+        //    humanResourceManager.RemoveEmployee(DelWorker, selectDepartment);
+
+        //}
 
     }
 
