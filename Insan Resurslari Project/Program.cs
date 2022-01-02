@@ -96,7 +96,7 @@ namespace Insan_Resurslari_Project
                     else
                     {
                         Console.WriteLine($"\n{item}\nMaas ortalamasi: {item.CalcSalaryAverage()}\nHazirki isci sayi: {counter}");
-                        //Console.Write($"Maas ortalamasi: {item.CalcSalaryAverage(item)}");
+                        
                     }
 
                 }
@@ -364,7 +364,7 @@ namespace Insan_Resurslari_Project
                         {                                                                 //Departamentden isci silinerse yerine isci elave etmek mumkundur
                             nullcounter++;
                         }
-                        if (counter - nullcounter >= department.WorkerLimit-1)
+                        if (counter - nullcounter >= department.WorkerLimit||counter-nullcounter==0)
                         {
                             Console.WriteLine("Teyin edilmis isci limitini kecdiniz...");
                             return;
