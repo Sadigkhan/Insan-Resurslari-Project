@@ -84,17 +84,17 @@ namespace Insan_Resurslari_Project.Models
         }
         public double SalaryCounter()
         {
-            double salaryNow = 0;
+            double CurrenSalary = 0;
 
             foreach (Employee item in Employees)
             {
                 if (item != null)
                 {
-                    salaryNow += item.Salary;
+                    CurrenSalary += item.Salary;
                 }
             }
 
-            return salaryNow;
+            return CurrenSalary;
         }
 
         public Department(string name,int workerlimit,double salarylimit)
